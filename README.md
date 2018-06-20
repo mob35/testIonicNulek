@@ -1,2 +1,0 @@
-# testIonicNulek
-testIonicNulek
