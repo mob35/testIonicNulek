@@ -11,6 +11,9 @@ page-playlist {
     ion-icon {
         font-size: 1.5em !important;
     }
+    ion-label {
+        white-space: unset;
+    }
     .line {
         border-bottom: 1px solid gainsboro !important;
     }
@@ -26,8 +29,9 @@ page-playlist {
         font-size: smaller;
         overflow: hidden;
         text-overflow: ellipsis;
-        white-space: nowrap; // -webkit-line-clamp: 3;
-        // -webkit-box-orient: vertical;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
     }
     .p {
         font-size: small;
@@ -39,5 +43,12 @@ page-playlist {
     .col {
         padding-bottom: 0px;
         padding-top: 0px;
+    }
+    .span-overflow {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
     }
 }

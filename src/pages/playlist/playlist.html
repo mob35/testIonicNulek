@@ -19,40 +19,39 @@
 
 
 <ion-content>
-  <!-- <div *ngFor="let item of playlists" class="h_iframe">
-      <iframe src="https://www.youtube.com/embed/gfN1bBgOmpU?autoplay=1" frameborder="0" allowfullscreen></iframe>
-  </div> -->
   <ion-list no-lines>
-    <ion-item-sliding *ngFor="let item of playlists; let i = index">
-      <ion-item no-lines class="line" (click)="onYoutube(i,item.playerid)">
-        <ion-row>
-          <ion-col col-4 col-md-2 col-sm-2>
-            <img class="fixImg" [src]="item.thumbnail">
-          </ion-col>
-          <ion-col col-8 col-md-10 col-sm-10 class="text-overflow">
-            <span>{{item.title}}</span>
-            <p class="p">Channel Title: {{item.channeltitle}}</p>
-          </ion-col>
-        </ion-row>
-        <ion-row class="h_iframe" *ngIf="i === index && playerid && openPlayer">
-          <ion-col col-12>
-            <iframe [src]="playerid" frameborder="0" allowfullscreen></iframe>
-          </ion-col>
-        </ion-row>
-      </ion-item>
-      <ion-item-options side="left">
-        <button ion-button color="danger" (click)="delete(item._id)">
-          <ion-icon name="md-trash"></ion-icon>
-          Delete
-        </button>
-      </ion-item-options>
+    <div *ngFor="let item of playlists; let i = index">
+      <ion-item-sliding>
+        <ion-item no-lines class="line" (click)="onYoutube(i,item.playerid)">
+          <ion-row>
+            <ion-col col-4 col-md-2 col-sm-2>
+              <img class="fixImg" [src]="item.thumbnail">
+            </ion-col>
+            <ion-col col-8 col-md-10 col-sm-10 class="text-overflow">
+              <span class="span-overflow">{{item.title}}</span>
+              <p class="p">Channel Title: {{item.channeltitle}} {{item.title}}</p>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-item-options side="left">
+          <button ion-button color="danger" (click)="delete(item._id)">
+            <ion-icon name="md-trash"></ion-icon>
+            Delete
+          </button>
+        </ion-item-options>
+        <ion-item-options side="right">
+          <button ion-button color="primary" (click)="share(item)">
+            <ion-icon name="md-share"></ion-icon>
+            Share
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+      <ion-row class="h_iframe" *ngIf="i === index && playerid && openPlayer">
+        <ion-col no-padding col-12>
+          <iframe [src]="playerid" frameborder="0" allowfullscreen></iframe>
+        </ion-col>
+      </ion-row>
+    </div>
 
-      <ion-item-options side="right">
-        <button ion-button color="primary" (click)="share(item)">
-          <ion-icon name="md-share"></ion-icon>
-          Share
-        </button>
-      </ion-item-options>
-    </ion-item-sliding>
   </ion-list>
 </ion-content>
