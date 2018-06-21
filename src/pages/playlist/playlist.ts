@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, AlertController, LoadingController } from 'ionic-angular';
 import { PlaylistServiceProvider } from '../playlist/playlist.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 /**
  * Generated class for the PlaylistPage page.
@@ -20,12 +21,12 @@ export class PlaylistPage {
   playerid: any;
   index: any = 0;
   openPlayer: boolean = false;
-  // playerid: string = 'https://www.youtube.com/embed/gfN1bBgOmpU?autoplay=1';
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public alertCtrl: AlertController,
     // private modalCtrl: ModalController,
+    private socialSharing: SocialSharing,
     private playlistServiceProvider: PlaylistServiceProvider,
     private sanitizer: DomSanitizer,
     private loadingCtrl: LoadingController
@@ -130,5 +131,10 @@ export class PlaylistPage {
 
   share(item) {
     console.log(item);
+    // this.socialSharing.share('รายงานรอบการขาย ' + this.historyData.shop.name, null, dataUrl).then(() => {
+      // this.loading.dismiss();
+    // }).catch((error) => {
+      // this.loading.dismiss();
+    // });
   }
 }
