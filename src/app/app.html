@@ -1,1 +1,21 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<ion-menu type="overlay" [content]="menu" [swipeEnabled]="false">
+    <ion-header>
+        <ion-toolbar>
+            <ion-title>List</ion-title>
+        </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+        <ion-list>
+            <!-- <button ion-item (click)="goTo('InitialPage')" [ngClass]="{'active-menu': activePage === 'InitialPage'}" menuClose>
+                <ion-icon name="md-log-out" color="theme" item-start></ion-icon>
+                <span item-end>AAA</span> 
+            </button> -->
+            <!-- <button ion-item (click)="goTo('InitialPage')" [ngClass]="{'active-menu': activePage === 'InitialPage'}" menuClose>
+                <ion-icon name="md-log-out" color="theme" item-start></ion-icon>
+                <span item-end>Logout</span>
+            </button> -->
+        </ion-list>
+    </ion-content>
+</ion-menu>
+<ion-nav [root]="rootPage" #menu></ion-nav>

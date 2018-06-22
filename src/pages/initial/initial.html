@@ -4,15 +4,32 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<!-- <ion-header>
 
   <ion-navbar>
-    <ion-title>initial</ion-title>
+    <ion-title>Initial</ion-title>
   </ion-navbar>
 
-</ion-header>
+</ion-header> -->
 
 
 <ion-content padding>
+  <ion-row class="justify-center">
+    <ion-col no-padding col-7 text-center>
+      <button ion-button block outline (click)="initialGuest()">With Device</button>
+      
+    </ion-col>
+    <ion-col no-padding col-7 text-center>
+        <p>Or</p>
+      </ion-col>
+    <ion-col no-padding col-12>
+      <ion-item>
+        <ion-label color="primary">Email</ion-label>
+        <ion-input  text-right type="email" placeholder="example@email.com"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col col-7>
 
+    </ion-col>
+  </ion-row>
 </ion-content>

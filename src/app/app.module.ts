@@ -8,6 +8,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { MyApp } from './app.component';
 import { PlaylistServiceProvider } from '../pages/playlist/playlist.service';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { Device } from '@ionic-native/device';
+import { InitialServiceProvider } from '../pages/initial/initial.service';
+import { CoreserviceProvider } from '../providers/coreservice/coreservice';
 
 @NgModule({
   declarations: [
@@ -28,8 +31,11 @@ import { SocialSharing } from '@ionic-native/social-sharing';
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
+    CoreserviceProvider,
     PlaylistServiceProvider,
-    SocialSharing
+    SocialSharing,
+    InitialServiceProvider,
+    Device
   ]
 })
 export class AppModule { }

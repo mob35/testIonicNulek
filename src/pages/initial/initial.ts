@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Device } from '@ionic-native/device';
+import { InitialServiceProvider } from './initial.service';
 
 /**
  * Generated class for the InitialPage page.
@@ -14,12 +16,30 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'initial.html',
 })
 export class InitialPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  user: any = {};
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private device: Device,
+    private initialServiceProvider: InitialServiceProvider
+  ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad InitialPage');
   }
-
+  initialGuest() {
+    this.user.serial = this.device.serial ? this.device.serial : '1805';
+    this.initialServiceProvider.signUp(this.user).then(data => {
+      this.navCtrl.setRoot('PlaylistPage');
+    }, err => {
+      if (err && err.status === 400 && err.message === "Email already exists") {
+        this.initialServiceProvider.signIn(this.user).then(data => {
+          this.navCtrl.setRoot('PlaylistPage');
+        }, err => {
+          console.log(err);
+        });
+      }
+    });
+  }
 }

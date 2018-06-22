@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, AlertController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { PlaylistServiceProvider } from '../playlist/playlist.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SocialSharing } from '@ionic-native/social-sharing';
