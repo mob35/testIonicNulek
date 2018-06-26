@@ -8,7 +8,6 @@ import { Constants } from './app.constants';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  // rootPage:any = 'HomePage';
   activePage: string;
   rootPage: any = 'PlaylistPage';
   deviceSerial: string;
