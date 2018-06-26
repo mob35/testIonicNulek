@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Platform, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-// import { Constants } from './app.constants';
+import { Constants } from './app.constants';
 
 @Component({
   templateUrl: 'app.html'
@@ -29,6 +29,11 @@ export class MyApp {
   goTo(page) {
     this.nav.setRoot(page);
     this.activePage = page;
+  }
+  logOut(){
+    window.localStorage.removeItem(Constants.URL + '@token');
+    window.localStorage.removeItem(Constants.URL + '@user');
+    this.nav.setRoot('InitialPage');
   }
 }
 

@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams, AlertController, LoadingController
 import { PlaylistServiceProvider } from '../playlist/playlist.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { Constants } from '../../app/app.constants';
+
 
 /**
  * Generated class for the PlaylistPage page.
@@ -17,6 +19,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
   templateUrl: 'playlist.html',
 })
 export class PlaylistPage {
+  user: any = {};
   playlists: any = [];
   playerid: any;
   index: any = 0;
@@ -32,6 +35,7 @@ export class PlaylistPage {
     private loadingCtrl: LoadingController
 
   ) {
+    this.user = window.localStorage.getItem(Constants.URL + '@user') ? JSON.parse(window.localStorage.getItem(Constants.URL + '@user')) : null;
   }
 
   ionViewDidLoad() {
@@ -67,7 +71,7 @@ export class PlaylistPage {
   getPlaylist() {
     let load = this.loadingCtrl.create();
     load.present();
-    this.playlistServiceProvider.getPlaylist().then(data => {
+    this.playlistServiceProvider.getPlaylist(this.user._id).then(data => {
       this.playlists = data.data;
 
       if (!this.playlists || this.playlists.length <= 0) {
@@ -130,7 +134,7 @@ export class PlaylistPage {
   }
 
   share(item) {
-    
+
     let load = this.loadingCtrl.create();
     load.present();
     let options = {

@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 // import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/timeout';
 import { Constants } from '../../app/app.constants';
-
+import { CoreserviceProvider } from '../../providers/coreservice/coreservice';
 /*
   Generated class for the OrderServiceProvider provider.
 
@@ -15,18 +15,21 @@ import { Constants } from '../../app/app.constants';
 export class PlaylistServiceProvider {
 
     constructor(
-        public http: HttpClient
+        public http: HttpClient,
+        public coreService: CoreserviceProvider
     ) {
     }
     postPlaylist(playlist): Promise<any> {
-        return this.http.post(Constants.URL + '/api/player', playlist)
+        let headers = this.coreService.authorizationHeader();
+        return this.http.post(Constants.URL + '/api/player', playlist, { headers: headers })
             .timeout(55000)
             .toPromise()
             .then(response => response as any)
             .catch(this.handleError);
     }
-    getPlaylist(): Promise<any> {
-        return this.http.get(Constants.URL + '/api/player')
+    getPlaylist(userId): Promise<any> {
+        let headers = this.coreService.authorizationHeader();
+        return this.http.get(Constants.URL + '/api/playerbyuser/' + userId, { headers: headers })
             .timeout(55000)
             .toPromise()
             .then(response => response as any)
@@ -34,7 +37,8 @@ export class PlaylistServiceProvider {
     }
 
     deletePlaylist(id): Promise<any> {
-        return this.http.delete(Constants.URL + '/api/player/' + id)
+        let headers = this.coreService.authorizationHeader();
+        return this.http.delete(Constants.URL + '/api/player/' + id, { headers: headers })
             .timeout(55000)
             .toPromise()
             .then(response => response as any)

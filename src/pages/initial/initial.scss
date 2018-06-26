@@ -1,8 +1,17 @@
 page-initial {
     .initial-vertical {
-        top: 30%;
+        // top: 30% !important;
+        position: absolute;
+        top: 40% !important;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
     }
     .justify-center {
         justify-content: center;
+    }
+    .fontP {
+        font-size: 22px;
+        color: #488aff;
     }
 }

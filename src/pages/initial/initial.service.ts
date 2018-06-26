@@ -25,7 +25,11 @@ export class InitialServiceProvider {
         return this.http.post(Constants.URL + '/api/auth/signin', credentials, { headers: headers })
             .timeout(55000)
             .toPromise()
-            .then(response => response as any)
+            .then((response: any) => {
+                let res = response;
+                window.localStorage.setItem(Constants.URL + '@token', res.token);
+                return response;
+            })
             .catch(this.handleError);
     }
 
@@ -34,7 +38,11 @@ export class InitialServiceProvider {
         return this.http.post(Constants.URL + '/api/auth/signup', credentials, { headers: headers })
             .timeout(55000)
             .toPromise()
-            .then(response => response as any)
+            .then((response: any) => {
+                let res = response;
+                window.localStorage.setItem(Constants.URL + '@token', res.token);
+                return response;
+            })
             .catch(this.handleError);
     }
 

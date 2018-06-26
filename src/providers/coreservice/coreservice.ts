@@ -25,7 +25,7 @@ export class CoreserviceProvider {
 
   getUserProfile(): Promise<any> {
     let headers = this.authorizationHeader();
-    return this.http.get(Constants.URL + '/api/user', { headers: headers })
+    return this.http.get(Constants.URL + '/api/getuser', { headers: headers })
       .toPromise()
       .then((response: any) => {
         let res = response;
@@ -36,7 +36,7 @@ export class CoreserviceProvider {
   }
 
   private handleError(error: any): Promise<any> {
-    return Promise.reject(error.message || error);
+    return Promise.reject(error.error || error.message || error);
   }
 
 }
