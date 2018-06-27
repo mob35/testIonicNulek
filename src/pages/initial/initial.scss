@@ -1,11 +1,7 @@
 page-initial {
-    .initial-vertical {
-        // top: 30% !important;
-        position: absolute;
-        top: 40% !important;
-        left: 50%;
-        margin-right: -50%;
-        transform: translate(-50%, -50%);
+    .grid-vertical {
+        height: 80%;
+        justify-content: center;
     }
     .justify-center {
         justify-content: center;

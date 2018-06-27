@@ -25,7 +25,11 @@ export class PinComponent {
 
   handleInput(pin: string) {
     if (pin === "clear") {
-      this.pin = "";
+      // console.log(this.pin.length);
+
+      // console.log(this.pin.substring(0, this.pin.length - 1));
+      // this.pin = "";
+      this.pin = this.pin.substring(0, this.pin.length - 1);
       return;
     }
 

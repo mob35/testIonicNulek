@@ -38,7 +38,13 @@ export class InitialPage {
     this.Pin = event;
   }
   showModalPin() {
-
+    let modal = this.modalCtrl.create('PinPage', null, { enableBackdropDismiss: false });
+    modal.onDidDismiss(data => {
+      if (data) {
+        console.log(data);
+      }
+    });
+    modal.present();
   }
 
   showPin() {

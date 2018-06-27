@@ -13,29 +13,31 @@
 </ion-header> -->
 
 
-<ion-content padding>
-  <ion-row class="initial-vertical justify-center">
-    <ion-col no-padding col-7 text-center>
-      <button ion-button block outline (click)="initialGuest()">With Device</button>
+<ion-content no-padding>
+  <ion-grid class="grid-vertical">
+    <ion-row class="justify-center">
+      <ion-col no-padding col-7 text-center>
+        <button ion-button block outline (click)="initialGuest()">With Device</button>
 
-    </ion-col>
-    <ion-col no-padding col-7 text-center>
-      <p class="fontP">Or</p>
-    </ion-col>
-    <ion-col no-padding col-10 text-center>
-      <ion-item>
-        <ion-label color="primary">Email</ion-label>
-        <ion-input text-right type="email" placeholder="example@email.com"></ion-input>
-      </ion-item>
-    </ion-col>
-    <ion-col no-padding col-7 text-center>
-      <button ion-button block clear (click)="showModalPin()">Enter Pin</button>
-    </ion-col>
-  </ion-row>
+      </ion-col>
+      <ion-col no-padding col-7 text-center>
+        <p class="fontP">Or</p>
+      </ion-col>
+      <ion-col no-padding col-10 text-center>
+        <ion-item>
+          <ion-label color="primary">Email</ion-label>
+          <ion-input text-right type="email" placeholder="example@email.com"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col no-padding col-7 text-center>
+        <button ion-button block clear (click)="showPin()">Enter Pin</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   <div text-center *ngIf="!ShowPin">
     <!-- <button ion-button clear large (click)="showPin()">Enter Pin</button>
     <br> -->
-    <label *ngIf="Pin">Pin entered is {{Pin}}</label>
+    <!-- <label *ngIf="Pin">Pin entered is {{Pin}}</label> -->
   </div>
   <pin *ngIf="ShowPin" pagetitle="Enter The Pin" (change)="eventCapture($event)"></pin>
 
