@@ -6,11 +6,10 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { HttpClientModule } from '@angular/common/http';
 
 import { MyApp } from './app.component';
-import { PlaylistServiceProvider } from '../pages/playlist/playlist.service';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Device } from '@ionic-native/device';
-import { InitialServiceProvider } from '../pages/initial/initial.service';
-import { CoreserviceProvider } from '../providers/coreservice/coreservice';
+import { RestApiService } from '../providers/rest-api-service/rest-api-service';
+import { DataService } from '../providers/data-service/data-service';
 
 @NgModule({
   declarations: [
@@ -31,11 +30,10 @@ import { CoreserviceProvider } from '../providers/coreservice/coreservice';
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    CoreserviceProvider,
-    PlaylistServiceProvider,
     SocialSharing,
-    InitialServiceProvider,
-    Device
+    RestApiService,
+    DataService,
+    Device 
   ]
 })
 export class AppModule { }

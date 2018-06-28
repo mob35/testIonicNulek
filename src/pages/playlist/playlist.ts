@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
-import { PlaylistServiceProvider } from '../playlist/playlist.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Constants } from '../../app/app.constants';
+import { RestApiService } from '../../providers/rest-api-service/rest-api-service';
 
 
 /**
@@ -30,8 +30,8 @@ export class PlaylistPage {
     public alertCtrl: AlertController,
     // private modalCtrl: ModalController,
     private socialSharing: SocialSharing,
-    private playlistServiceProvider: PlaylistServiceProvider,
     private sanitizer: DomSanitizer,
+    private restApiService: RestApiService,
     private loadingCtrl: LoadingController
 
   ) {
@@ -45,43 +45,43 @@ export class PlaylistPage {
   onYoutube(i, id) {
     if (this.openPlayer === false) {
       this.openPlayer = true;
-      let load = this.loadingCtrl.create();
-      load.present();
+      let loading = this.loadingCtrl.create();
+      loading.present();
       this.index = i;
       this.playerid = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + id + '?autoplay=1');
       setTimeout(() => {
-        load.dismiss();
+        loading.dismiss();
       }, 1000);
     } else {
       if (this.index === i) {
         this.openPlayer = false;
       } else {
         this.openPlayer = true;
-        let load = this.loadingCtrl.create();
-        load.present();
+        let loading = this.loadingCtrl.create();
+        loading.present();
         this.index = i;
         this.playerid = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + id + '?autoplay=1');
         setTimeout(() => {
-          load.dismiss();
+          loading.dismiss();
         }, 1000);
       }
     }
   }
 
-  getPlaylist() {
-    let load = this.loadingCtrl.create();
-    load.present();
-    this.playlistServiceProvider.getPlaylist(this.user._id).then(data => {
+  async getPlaylist() {
+    let loading = this.loadingCtrl.create();
+    loading.present();
+    try {
+      let data: any = await this.restApiService.getPlaylist('/api/playerbyuser/', this.user._id);
       this.playlists = data.data;
-
       if (!this.playlists || this.playlists.length <= 0) {
         this.goToAddPlaylist();
       }
-      load.dismiss();
-    }, err => {
-      load.dismiss();
+      loading.dismiss();
+    } catch (err) {
+      loading.dismiss();
       alert('Error' + err);
-    });
+    }
   }
 
   goToAddPlaylist() {
@@ -106,7 +106,7 @@ export class PlaylistPage {
         {
           text: 'Save',
           handler: data => {
-            this.playlistServiceProvider.postPlaylist(data).then(data => {
+            this.restApiService.postPlaylist('/api/player', data).then(data => {
               this.ionViewDidLoad();
             }, err => {
               alert('Error' + err);
@@ -118,25 +118,26 @@ export class PlaylistPage {
     prompt.present();
   }
 
-  delete(id) {
-    let load = this.loadingCtrl.create();
-    load.present();
-    this.playlistServiceProvider.deletePlaylist(id).then(data => {
+  async delete(id) {
+    console.log(id);
+    let loading = this.loadingCtrl.create();
+    try {
+      loading.present();
+      let data = await this.restApiService.deletePlaylist('/api/player/', id)
       if (data != undefined) {
         console.log('Delete Success');
-        load.dismiss();
+        loading.dismiss();
         this.ionViewDidLoad();
       }
-    }, err => {
-      load.dismiss();
+    } catch (err) {
+      loading.dismiss();
       alert('Error' + err);
-    });
+    }
   }
 
   share(item) {
-
-    let load = this.loadingCtrl.create();
-    load.present();
+    let loading = this.loadingCtrl.create();
+    loading.present();
     let options = {
       // message: 'share this', // not supported on some apps (Facebook, Instagram)
       // subject: 'the subject', // fi. for email
@@ -147,10 +148,10 @@ export class PlaylistPage {
     this.socialSharing.shareWithOptions(options).then((result) => {
       console.log("Share completed? ", result.completed); // On Android apps mostly return false even while it's true
       console.log("Shared to app: ", result.app); // On Android result.app is currently empty. On iOS it's empty when sharing is cancelled (result.completed=false)
-      load.dismiss();
+      loading.dismiss();
     }, (err) => {
       console.log("Sharing failed with message: ", err);
-      load.dismiss();
+      loading.dismiss();
     });
   }
 }

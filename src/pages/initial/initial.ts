@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, LoadingController } from 'ionic-angular';
 import { Device } from '@ionic-native/device';
-import { InitialServiceProvider } from './initial.service';
-import { CoreserviceProvider } from '../../providers/coreservice/coreservice';
+import { RestApiService } from '../../providers/rest-api-service/rest-api-service';
+import { Constants } from '../../app/app.constants';
 
 /**
  * Generated class for the InitialPage page.
@@ -24,9 +24,9 @@ export class InitialPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private device: Device,
-    private initialServiceProvider: InitialServiceProvider,
-    private coreserviceProvider: CoreserviceProvider,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private restApiService: RestApiService,
+    private loadingCtrl: LoadingController,
   ) {
   }
 
@@ -51,29 +51,47 @@ export class InitialPage {
     this.ShowPin = !this.ShowPin;
   }
 
-  initialGuest() {
+  async initialGuest() {
     this.user.serial = this.device.serial ? this.device.serial : '1805';
     this.user.username = this.user.serial;
-    this.initialServiceProvider.signUp(this.user).then(data => {
-      this.coreserviceProvider.getUserProfile().then(data => {
-        this.navCtrl.setRoot('PlaylistPage');
-      }, err => {
-        alert(err.message);
-      });
-    }, err => {
-      // alert(err.message);
-      if (err && err.status === 400 && (err.message === "Email already exists" || err.message === "Username already exists")) {
-        this.initialServiceProvider.signIn(this.user).then(data => {
-          this.coreserviceProvider.getUserProfile().then(data => {
-            this.navCtrl.setRoot('PlaylistPage');
-          }, err => {
-            alert(err.message);
-          });
-        }, err => {
-          alert(err.message);
-        });
+    let loading = this.loadingCtrl.create();
+    try {
+      loading.present();
+      let signup: any = await this.restApiService.signUp('/api/auth/signup', this.user);
+      if (signup) {
+        window.localStorage.setItem(Constants.URL + '@token', signup.token);
+        try {
+          let getuser: any = await this.restApiService.getUserProfile('/api/getuser');
+          window.localStorage.setItem(Constants.URL + '@user', JSON.stringify(getuser.data));
+          loading.dismiss();
+          this.navCtrl.setRoot('PlaylistPage');
+        } catch (err) {
+          console.log(err.error);
+          loading.dismiss();
+        }
       }
-    });
+    } catch (err) {
+      if (err && err.error.status === 400 && (err.error.message === "Email already exists" || err.error.message === "Username already exists")) {
+        try {
+          let signin: any = await this.restApiService.signIn('/api/auth/signin', this.user);
+          if (signin) {
+            window.localStorage.setItem(Constants.URL + '@token', signin.token);
+            try {
+              let getuser: any = await this.restApiService.getUserProfile('/api/getuser');
+              window.localStorage.setItem(Constants.URL + '@user', JSON.stringify(getuser.data));
+              loading.dismiss();
+              this.navCtrl.setRoot('PlaylistPage');
+            } catch (err) {
+              console.log(err.error);
+              loading.dismiss();
+            }
+          }
+        } catch (err) {
+          console.log(err.error);
+          loading.dismiss();
+        }
+      }
+    };
   }
 
 }
