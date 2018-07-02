@@ -1,6 +1,9 @@
 pin {
-    ion-icon {
-        font-size: 2.2em;
+    // ion-icon {
+    //     font-size: 2.2em;
+    // }
+    .scroll-content{
+        overflow-y: scroll !important;
     }
     .content-center {
         justify-content: center;

@@ -10,6 +10,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 import { Device } from '@ionic-native/device';
 import { RestApiService } from '../providers/rest-api-service/rest-api-service';
 import { DataService } from '../providers/data-service/data-service';
+import { OneSignal } from '@ionic-native/onesignal';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { DataService } from '../providers/data-service/data-service';
     SocialSharing,
     RestApiService,
     DataService,
-    Device 
+    Device,
+    OneSignal
   ]
 })
 export class AppModule { }

@@ -47,9 +47,9 @@ export class InitialPage {
     modal.present();
   }
 
-  showPin() {
-    this.ShowPin = !this.ShowPin;
-  }
+  // showPin() {
+  //   this.ShowPin = !this.ShowPin;
+  // }
 
   async initialGuest() {
     this.user.serial = this.device.serial ? this.device.serial : '1805';

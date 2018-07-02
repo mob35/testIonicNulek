@@ -16,11 +16,18 @@ export class PinComponent {
   pin: string = "";
 
   @Output() change: EventEmitter<string> = new EventEmitter<string>();
+  @Output() close: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() { }
 
   emitEvent() {
-    this.change.emit(this.pin);
+    if (this.pin.length === 4) {
+      this.change.emit(this.pin);
+    }
+  }
+
+  cancelPin() {
+    this.close.emit('close');
   }
 
   handleInput(pin: string) {

@@ -30,15 +30,15 @@
         </ion-item>
       </ion-col>
       <ion-col no-padding col-7 text-center>
-        <button ion-button block clear (click)="showPin()">Enter Pin</button>
+        <button ion-button block clear (click)="showModalPin()">Enter Pin</button>
       </ion-col>
     </ion-row>
   </ion-grid>
-  <div text-center *ngIf="!ShowPin">
-    <!-- <button ion-button clear large (click)="showPin()">Enter Pin</button>
-    <br> -->
-    <!-- <label *ngIf="Pin">Pin entered is {{Pin}}</label> -->
-  </div>
-  <pin *ngIf="ShowPin" pagetitle="Enter The Pin" (change)="eventCapture($event)"></pin>
+  <!-- <div text-center *ngIf="!ShowPin">
+    <button ion-button clear large (click)="showPin()">Enter Pin</button>
+    <br>
+    <label *ngIf="Pin">Pin entered is {{Pin}}</label>
+  </div> -->
+  <!-- <pin *ngIf="ShowPin" pagetitle="Enter The Pin" (change)="eventCapture($event)"></pin> -->
 
 </ion-content>

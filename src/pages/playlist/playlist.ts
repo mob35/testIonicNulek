@@ -106,11 +106,7 @@ export class PlaylistPage {
         {
           text: 'Save',
           handler: data => {
-            this.restApiService.postPlaylist('/api/player', data).then(data => {
-              this.ionViewDidLoad();
-            }, err => {
-              alert('Error' + err);
-            });
+            this.postPlaylist(data);
           }
         }
       ]
@@ -118,8 +114,16 @@ export class PlaylistPage {
     prompt.present();
   }
 
+  async postPlaylist(data) {
+    try {
+      await this.restApiService.postPlaylist('/api/player', data);
+      this.ionViewDidLoad();
+    } catch (err) {
+      alert('Error' + err);
+    }
+  }
+
   async delete(id) {
-    console.log(id);
     let loading = this.loadingCtrl.create();
     try {
       loading.present();
