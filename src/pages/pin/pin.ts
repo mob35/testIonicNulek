@@ -33,7 +33,7 @@ export class PinPage {
   }
 
   eventCapture(event) {
-    console.log(event);
+    this.viewCtrl.dismiss(event);
   }
 
 }

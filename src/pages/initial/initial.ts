@@ -20,6 +20,7 @@ export class InitialPage {
   user: any = {};
   Pin: String = "";
   ShowPin: Boolean = false;
+  email: String = "";
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -41,7 +42,8 @@ export class InitialPage {
     let modal = this.modalCtrl.create('PinPage', null, { enableBackdropDismiss: false });
     modal.onDidDismiss(data => {
       if (data) {
-        console.log(data);
+        this.user.password = data;
+        this.initialGuest();
       }
     });
     modal.present();
@@ -54,6 +56,7 @@ export class InitialPage {
   async initialGuest() {
     this.user.serial = this.device.serial ? this.device.serial : '1805';
     this.user.username = this.user.serial;
+    this.user.email = this.email;
     let loading = this.loadingCtrl.create();
     try {
       loading.present();

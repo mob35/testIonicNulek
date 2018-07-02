@@ -11,7 +11,7 @@ import { OneSignal } from '@ionic-native/onesignal';
 export class MyApp {
   activePage: string;
   rootPage: any = 'PlaylistPage';
-  deviceSerial: string;
+
   @ViewChild(Nav) nav;
   constructor(
     platform: Platform,
@@ -28,7 +28,10 @@ export class MyApp {
         this.onSignalSetup();
       }
     });
-    if (this.deviceSerial) {
+    let user = window.localStorage.getItem(Constants.URL + '@user');
+    let token = window.localStorage.getItem(Constants.URL + '@token');
+
+    if (user || token) {
       this.rootPage = 'PlaylistPage';
     } else {
       this.rootPage = 'InitialPage';
