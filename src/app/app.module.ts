@@ -11,7 +11,7 @@ import { Device } from '@ionic-native/device';
 import { RestApiService } from '../providers/rest-api-service/rest-api-service';
 import { DataService } from '../providers/data-service/data-service';
 import { OneSignal } from '@ionic-native/onesignal';
-
+import { Facebook } from '@ionic-native/facebook';
 @NgModule({
   declarations: [
     MyApp
@@ -35,7 +35,8 @@ import { OneSignal } from '@ionic-native/onesignal';
     RestApiService,
     DataService,
     Device,
-    OneSignal
+    OneSignal,
+    Facebook
   ]
 })
 export class AppModule { }

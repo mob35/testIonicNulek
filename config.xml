@@ -85,5 +85,11 @@
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.4.0" />
     <plugin name="cordova-plugin-device" spec="^2.0.2" />
     <plugin name="onesignal-cordova-plugin" spec="^2.4.1" />
+    <plugin name="cordova-plugin-facebook4" spec="^4.1.0">
+        <variable name="APP_ID" value="2287672531557682" />
+        <variable name="APP_NAME" value="myPlaylist" />
+        <variable name="FACEBOOK_HYBRID_APP_EVENTS" value="false" />
+        <variable name="FACEBOOK_ANDROID_SDK_VERSION" value="4.38.1" />
+    </plugin>
     <engine name="android" spec="6.3.0" />
 </widget>

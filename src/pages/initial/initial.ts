@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, ModalController, LoadingController
 import { Device } from '@ionic-native/device';
 import { RestApiService } from '../../providers/rest-api-service/rest-api-service';
 import { Constants } from '../../app/app.constants';
-
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 /**
  * Generated class for the InitialPage page.
  *
@@ -28,12 +28,24 @@ export class InitialPage {
     private modalCtrl: ModalController,
     private restApiService: RestApiService,
     private loadingCtrl: LoadingController,
+    private fb: Facebook
   ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad InitialPage');
   }
+
+  loginFb() {
+    this.fb.login(['public_profile', 'user_friends', 'email'])
+      .then((res: FacebookLoginResponse) => {
+        alert(JSON.stringify(res))
+      }, (e) => {
+        console.log('Error logging into Facebook', e);
+      }).catch(e => console.log('Error logging into Facebook', e));
+  }
+
+
   eventCapture(event) {
     this.ShowPin = false;
     this.Pin = event;

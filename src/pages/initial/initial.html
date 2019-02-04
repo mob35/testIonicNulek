@@ -17,6 +17,10 @@
   <ion-grid class="grid-vertical">
     <ion-row class="justify-center">
       <ion-col no-padding col-7 text-center>
+        <button ion-button block outline (click)="loginFb()">Login With Facebook</button>
+
+      </ion-col>
+      <ion-col no-padding col-7 text-center>
         <button ion-button block outline (click)="initialGuest()">With Device</button>
 
       </ion-col>
@@ -26,11 +30,11 @@
       <ion-col no-padding col-10 text-center>
         <ion-item>
           <ion-label color="primary">Email</ion-label>
-          <ion-input text-right type="email" placeholder="example@email.com" [(ngModel)]="email" ></ion-input>
+          <ion-input text-right type="email" placeholder="example@email.com" [(ngModel)]="email"></ion-input>
         </ion-item>
       </ion-col>
       <ion-col no-padding col-7 text-center>
-        <button ion-button block clear  [disabled]="!email"  (click)="showModalPin()">Enter Pin</button>
+        <button ion-button block clear [disabled]="!email" (click)="showModalPin()">Enter Pin</button>
       </ion-col>
     </ion-row>
   </ion-grid>
