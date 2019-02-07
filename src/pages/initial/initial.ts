@@ -4,6 +4,7 @@ import { Device } from '@ionic-native/device';
 import { RestApiService } from '../../providers/rest-api-service/rest-api-service';
 import { Constants } from '../../app/app.constants';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
+import { DataService } from '../../providers/data-service/data-service';
 /**
  * Generated class for the InitialPage page.
  *
@@ -28,7 +29,8 @@ export class InitialPage {
     private modalCtrl: ModalController,
     private restApiService: RestApiService,
     private loadingCtrl: LoadingController,
-    private fb: Facebook
+    private fb: Facebook,
+    public dataService: DataService
   ) {
   }
 
@@ -41,7 +43,7 @@ export class InitialPage {
       .then((res: FacebookLoginResponse) => {
         alert(JSON.stringify(res))
       }, (e) => {
-        console.log('Error logging into Facebook', e);
+        console.log('Error logging into Facebook!!', e);
       }).catch(e => console.log('Error logging into Facebook', e));
   }
 
@@ -53,6 +55,7 @@ export class InitialPage {
   showModalPin() {
     let modal = this.modalCtrl.create('PinPage', null, { enableBackdropDismiss: false });
     modal.onDidDismiss(data => {
+      console.log(data);
       if (data) {
         this.user.password = data;
         this.initialGuest();
@@ -66,6 +69,7 @@ export class InitialPage {
   // }
 
   async initialGuest() {
+    this.dataService.error('');
     this.user.serial = this.device.serial ? this.device.serial : '1805';
     this.user.username = this.user.serial;
     this.user.email = this.email;
@@ -81,11 +85,12 @@ export class InitialPage {
           loading.dismiss();
           this.navCtrl.setRoot('PlaylistPage');
         } catch (err) {
-          console.log(err.error);
+          this.dataService.error(err.error.message);
           loading.dismiss();
         }
       }
     } catch (err) {
+      console.log(err)
       if (err && err.error.status === 400 && (err.error.message === "Email already exists" || err.error.message === "Username already exists")) {
         try {
           let signin: any = await this.restApiService.signIn('/api/auth/signin', this.user);
@@ -98,13 +103,18 @@ export class InitialPage {
               this.navCtrl.setRoot('PlaylistPage');
             } catch (err) {
               console.log(err.error);
+              this.dataService.error(err.error.message);
               loading.dismiss();
             }
           }
         } catch (err) {
           console.log(err.error);
+          this.dataService.error(err.error.message);
           loading.dismiss();
         }
+      } else {
+        this.dataService.error(err.error.message);
+        loading.dismiss();
       }
     };
   }

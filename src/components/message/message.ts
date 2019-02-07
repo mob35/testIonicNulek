@@ -1,22 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
-/**
- * Generated class for the MessageComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
 @Component({
   selector: 'message',
   templateUrl: 'message.html'
 })
 export class MessageComponent {
-
-  text: string;
+  @Input() type: string = '';
+  @Input() message: string = '';
 
   constructor() {
-    console.log('Hello MessageComponent Component');
-    this.text = 'Hello World';
+    // console.log('Hello MessageComponent Component');
   }
 
 }

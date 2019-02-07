@@ -21,7 +21,7 @@
 
       </ion-col>
       <ion-col no-padding col-7 text-center>
-        <button ion-button block outline (click)="initialGuest()">With Device</button>
+        <button ion-button block outline (click)="initialGuest()">Guest Device</button>
 
       </ion-col>
       <ion-col no-padding col-7 text-center>
@@ -35,6 +35,9 @@
       </ion-col>
       <ion-col no-padding col-7 text-center>
         <button ion-button block clear [disabled]="!email" (click)="showModalPin()">Enter Pin</button>
+      </ion-col>
+      <ion-col no-padding col-12>
+        <message text-center [type]="dataService.messageType" [message]="dataService.message"></message>
       </ion-col>
     </ion-row>
   </ion-grid>
