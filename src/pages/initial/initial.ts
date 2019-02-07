@@ -39,10 +39,18 @@ export class InitialPage {
   }
 
   loginFb() {
+    this.dataService.error('');
     this.fb.login(['public_profile', 'user_friends', 'email'])
       .then((res: FacebookLoginResponse) => {
-        alert(JSON.stringify(res))
+        this.fb.api('me?fields=id,name,email,first_name,last_name,picture.width(720).height(720).as(picture_large)', []).then(profile => {
+          // this.userData = {email: profile['email'], first_name: profile['first_name'], picture: profile['picture_large']['data']['url'], username: profile['name']}
+          this.user.email = profile.email;
+          this.user.username = profile.first_name + profile.last_name;
+          this.device.serial = profile.id;
+          this.initialGuest();
+        });
       }, (e) => {
+        this.dataService.error('Error logging into Facebook!!');
         console.log('Error logging into Facebook!!', e);
       }).catch(e => console.log('Error logging into Facebook', e));
   }
@@ -55,7 +63,7 @@ export class InitialPage {
   showModalPin() {
     let modal = this.modalCtrl.create('PinPage', null, { enableBackdropDismiss: false });
     modal.onDidDismiss(data => {
-      console.log(data);
+      // console.log(data);
       if (data) {
         this.user.password = data;
         this.initialGuest();
@@ -70,10 +78,10 @@ export class InitialPage {
 
   async initialGuest() {
     this.dataService.error('');
-    this.user.serial = this.device.serial ? this.device.serial : '1805';
-    this.user.username = this.user.serial;
-    this.user.email = this.email;
     let loading = this.loadingCtrl.create();
+    this.user.serial = this.device.serial ? this.device.serial : '1805';
+    this.user.username = this.user.username ? this.user.username : this.user.serial;
+    this.user.email = this.user.email ? this.user.email : this.email;
     try {
       loading.present();
       let signup: any = await this.restApiService.signUp('/api/auth/signup', this.user);
@@ -85,7 +93,7 @@ export class InitialPage {
           loading.dismiss();
           this.navCtrl.setRoot('PlaylistPage');
         } catch (err) {
-          this.dataService.error(err.error.message);
+          this.dataService.error(err.error.message ? err.error.message : err.statusText);
           loading.dismiss();
         }
       }
@@ -103,17 +111,17 @@ export class InitialPage {
               this.navCtrl.setRoot('PlaylistPage');
             } catch (err) {
               console.log(err.error);
-              this.dataService.error(err.error.message);
+              this.dataService.error(err.error.message ? err.error.message : err.statusText);
               loading.dismiss();
             }
           }
         } catch (err) {
           console.log(err.error);
-          this.dataService.error(err.error.message);
+          this.dataService.error(err.error.message ? err.error.message : err.statusText);
           loading.dismiss();
         }
       } else {
-        this.dataService.error(err.error.message);
+        this.dataService.error(err.error.message ? err.error.message : err.statusText);
         loading.dismiss();
       }
     };

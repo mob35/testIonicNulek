@@ -16,18 +16,20 @@
 <ion-content no-padding>
   <ion-grid class="grid-vertical">
     <ion-row class="justify-center">
-      <ion-col no-padding col-7 text-center>
+      <ion-col padding-top padding-bottom col-10 text-center>
         <button ion-button block outline (click)="loginFb()">Login With Facebook</button>
 
       </ion-col>
-      <ion-col no-padding col-7 text-center>
+      <ion-col padding-top padding-bottom col-10 text-center>
         <button ion-button block outline (click)="initialGuest()">Guest Device</button>
 
       </ion-col>
       <ion-col no-padding col-7 text-center>
-        <p class="fontP">Or</p>
+        <p class="fontP">OR</p>
       </ion-col>
-      <ion-col no-padding col-10 text-center>
+      <ion-col padding-bottom col-12 class="line-buttom">
+      </ion-col>
+      <ion-col padding-top col-10 text-center>
         <ion-item>
           <ion-label color="primary">Email</ion-label>
           <ion-input text-right type="email" placeholder="example@email.com" [(ngModel)]="email"></ion-input>

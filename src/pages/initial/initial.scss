@@ -1,6 +1,6 @@
 page-initial {
     .grid-vertical {
-        height: 80%;
+        height: 100%;
         justify-content: center;
     }
     .justify-center {
@@ -12,5 +12,10 @@ page-initial {
     }
     .scroll-content{
         overflow: hidden;
+    }
+    .line-buttom{
+        border-top-width: 1.9px;
+        border-top-style: dashed;
+        border-top-color: darkgray;
     }
 }
